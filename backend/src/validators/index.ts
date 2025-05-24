@@ -1,0 +1,1 @@
+export {CreatePostSchema} from './post.validator';
