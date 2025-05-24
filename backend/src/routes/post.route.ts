@@ -1,15 +1,16 @@
 import { Router } from 'express';
-import {createPost, likePost, unlikePost} from '@controllers';
+import {getAllPost, getLoggedInUserPosts, getPostsByUserId, createPost} from '@controllers';
 
-const router = Router();
+const postRouter = Router();
+
+// Get all posts
+postRouter.get('/', getAllPost);
+postRouter.get('/me', getLoggedInUserPosts);
+postRouter.get('/:authorId', getPostsByUserId);
 
 // Create a new post
-router.post('/', createPost);
+postRouter.post('/', createPost);
 
-// Like a post
-router.post('/:id/like', likePost);
 
-// Unlike a post
-router.delete('/:id/like', unlikePost);
 
-export default router;
+export default postRouter;

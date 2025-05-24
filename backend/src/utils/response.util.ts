@@ -22,7 +22,7 @@ export function success<T>(res: Response, message: string, data?: T, status = St
     message,
     data,
   };
-  return res.status(status).json(body);
+  res.status(status).json(body);
 }
 
 // Sends an error API response with a message and a custom status code.
@@ -31,10 +31,11 @@ export function error(res: Response, message: string | ErrorMessage[], status = 
     success: false,
     message,
   };
-  return res.status(status).json(body);
+  res.status(status).json(body);
 }
 
 // Sends a validation error API response, typically for invalid input.
 export function validationError(res: Response, message: ErrorMessage[]) {
-  return error(res, message, StatusCodes.BAD_REQUEST);
+  error(res, message, StatusCodes.BAD_REQUEST);
 }
+  

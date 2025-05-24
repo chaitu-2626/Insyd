@@ -1,1 +1,2 @@
-export {CreatePostSchema} from './post.validator';
+export * from './post.validator';
+export * from './follower.validators';

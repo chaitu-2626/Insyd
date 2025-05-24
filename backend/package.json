@@ -1,5 +1,5 @@
 {
-	"name": "backend",
+	"name": "insyd-backend",
 	"version": "1.0.0",
 	"author": "Vinay Chaitanya Manchikatla",
 	"description": "This is the backend for @insyd",
@@ -7,18 +7,18 @@
 	"keywords": [
 		"@insyd/backend",
 		"insyd",
-    "backend"
+		"backend"
 	],
-	"main": "index.js",
+	"main": "server.js",
 	"type": "module",
 	"private": true,
 	"scripts": {
-		"dev": "tsc --build --watch",
+		"dev": "nodemon",
 		"build": "tsc --build",
 		"test": "vitest",
 		"db:push": "npx drizzle-kit push",
 		"db:pull": "npx drizzle-kit pull",
-		"db:generate": "npx drizzle-kit generate",
+		"db:generate": "npx drizzle-kit generate --name=Added_title_column_to_post_table",
 		"db:migrate": "npx drizzle-kit migrate",
 		"db:seed": "tsx src/seed.ts",
 		"db:studio": "npx drizzle-kit studio"
@@ -27,21 +27,23 @@
 		"@types/cors": "^2.8.18",
 		"@types/express": "^5.0.2",
 		"@types/node": "^22.15.21",
+		"drizzle-kit": "^0.31.1",
 		"nodemon": "^3.1.10",
 		"ts-node": "^10.9.2",
-		"typescript": "5.8.2",
-		"drizzle-kit": "^0.31.1",
+		"tsc": "^2.0.4",
+		"tsc-alias": "^1.8.16",
 		"tsx": "^4.19.4",
+		"typescript": "5.8.2",
 		"vitest": "^3.1.4"
 	},
 	"dependencies": {
+		"@clerk/express": "^1.5.0",
 		"@neondatabase/serverless": "^1.0.0",
-		"drizzle-orm": "^0.43.1",
-		"zod": "^3.25.23",
-		"@clerk/clerk-sdk-node": "^4.13.23",
 		"cors": "^2.8.5",
 		"dotenv": "^16.5.0",
+		"drizzle-orm": "^0.43.1",
 		"express": "^5.1.0",
-		"http-status-codes": "^2.3.0"
+		"http-status-codes": "^2.3.0",
+		"zod": "^3.25.23"
 	}
 }

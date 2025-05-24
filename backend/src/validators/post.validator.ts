@@ -14,3 +14,16 @@ export const CreatePostSchema = z.object({
     .string()
     .min(1, { message: 'Author ID is required' }), // assuming Clerk user ID (text)
 });
+
+
+export const GetPostById = z.object({
+  authorId: z
+    .string()
+    .min(1, { message: 'Post ID is required' }),
+});
+
+export const LikeAndUnLikePost = z.object({
+  postId: z
+    .string()
+    .min(1, { message: 'Post ID is required' }),
+});

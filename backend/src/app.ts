@@ -1,24 +1,30 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-import { json } from 'body-parser';
-import routes from './routes';
-import { requireClerkAuth } from './middlewares/requireClerkAuth';
+import routes from '@routes';
+import { clerkMiddleware, requireAuth } from '@clerk/express';
+
 
 const app = express();
 
-// Middleware setup
+// Global middlewares
 app.use(cors());
-app.use(json());
+app.use(express.json());
 
-// Health check route
-app.get('/health', (_req, res) => {
+//The clerkMiddleware() function checks the request's cookies and headers for a session JWT and, if found, attaches the Auth object to the request object under the auth key.
+app.use(clerkMiddleware());
+
+// Health check route — public
+app.get('/health', (_req: Request, res: Response) => {
   res.status(200).json({ status: 'ok' });
 });
 
-// Clerk authentication (if you want to apply it globally)
-app.use(requireClerkAuth);
+// Protect all `/api` routes — only accessible by authenticated users
+app.use('/api', requireAuth(), routes);
 
-// All routes under /api
-app.use('/api', routes);
+// Optional: error handler for catching Clerk-related errors
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  console.error(err);
+  res.status(500).json({ message: 'Internal server error' });
+});
 
 export default app;

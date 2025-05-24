@@ -1,1 +1,3 @@
-export { createPost, likePost, unlikePost } from './post.controller';
+export * from './post.controller';
+export * from './follow.controller';
+export * from './like.controller';

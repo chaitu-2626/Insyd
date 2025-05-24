@@ -1,2 +1,2 @@
-export {db, sql} from './db';
-export {env} from './env';
+export * from './db.config';
+export * from './env.config';

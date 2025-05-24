@@ -26,7 +26,7 @@ abstract class BaseRepository<
      * @param id The ID of the entity to retrieve.
      * @returns The retrieved entity or undefined if not found.
      */
-    public async getById(id: string): Promise<TSelect | undefined> {
+    public async getById(id: string): Promise<TSelect[]> {
         const me = this;
 
         try {
@@ -34,10 +34,10 @@ abstract class BaseRepository<
             const result = await db
                 .select()
                 .from(me.table as PgTable)
-                .where(eq(getTableColumns(me.table).id, id))
+                .where(eq(me.idColumn, id))
                 .limit(1);
 
-            return result ? result[0] as TSelect : undefined;
+            return result as TSelect[];
         } catch (error) {
             console.error(`Error getting entity by ID ${id} from table ${me.table._.name}:`, error);
             throw error;
@@ -71,7 +71,7 @@ abstract class BaseRepository<
             const result = await db.insert(me.table).values(data).returning();
             return result ? result[0] as TSelect : undefined;
         } catch (error) {
-            console.error(`Error creating entity in table ${me.table._.name}:`, error);
+            console.error(error);
             throw error;
         }
     }
@@ -108,7 +108,7 @@ abstract class BaseRepository<
      * @param id The ID of the entity to delete.
      * @returns The deleted entity or undefined if not found.
      */
-    public async delete<T>(id: T): Promise<TSelect | undefined> {
+    public async delete(id: string): Promise<TSelect | undefined> {
         const me = this;
 
         try {

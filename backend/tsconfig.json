@@ -9,10 +9,17 @@
 
 		"paths": {
 			// Module alias mapping for cleaner imports
-			"@config": ["src/config/index.ts"],
-			"@schema": ["src/schema/index.ts"],
-			"@repository": ["src/repository/index.ts"],
-			"@types": ["src/types.ts"]
+			"$/*": ["./*"],
+			"@controllers": ["src/controllers/index.ts"],
+			"@middlewares": ["src/middlewares/index.ts"],
+			"@repository": ["src/repositories/index.ts"],
+			"@routes": ["src/routes/index.ts"],
+			"@utils": ["src/utils/index.ts"],
+			"@validators": ["src/validators/index.ts"],
+			"@tests": ["src/tests/index.ts"],
+			"@types": ["src/types/index.ts"],
+			"@config": ["src/configs/index.ts"],
+			"@schema": ["src/schemas/index.ts"]
 		},
 
 		"target": "ES2022", // ECMAScript version output (latest features of 2022)
