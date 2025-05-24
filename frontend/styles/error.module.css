@@ -1,0 +1,63 @@
+/* error.module.css */
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #f4f4f4;
+  font-family: sans-serif;
+}
+
+.errorTitle {
+  font-size: 2.5em;
+  color: #d32f2f; /* Red accent */
+  margin-bottom: 10px;
+}
+
+.errorMessage {
+  font-size: 1.1em;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.errorDetails {
+  background-color: #eee;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  text-align: left;
+  max-width: 80%;
+}
+
+.errorDetails summary {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.errorDetails p {
+  margin-top: 10px;
+  color: #333;
+}
+
+.reloadButton {
+  padding: 12px 24px;
+  font-size: 1em;
+  color: white;
+  background-color: #007bff; /* Blue primary color */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reloadButton:hover {
+  background-color: #0056b3;
+}
+
+.reloadButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}

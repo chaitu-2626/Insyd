@@ -1,0 +1,30 @@
+/* app/components/LikeButton.module.css */
+.likeContainer {
+    display: flex;
+    align-items: center;
+}
+
+.likeButton {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.unliked {
+    background-color: #e0e0e0;
+    /* Light grey */
+    color: #333;
+}
+
+.liked {
+    background-color: #dc3545;
+    /* Red */
+    color: white;
+}
+
+.likeCount {
+    margin-left: 8px;
+    color: #555;
+}

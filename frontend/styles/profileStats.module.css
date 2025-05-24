@@ -1,0 +1,51 @@
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    background-color: #f9fafb;
+    /* bg-gray-50 */
+    border-radius: 0.5rem;
+    /* rounded-lg */
+    padding: 1rem;
+    /* p-4 */
+    margin-bottom: 1.5rem;
+    /* mb-6 */
+}
+
+.statItem {
+    text-align: center;
+}
+
+.statNumber {
+    font-size: 1.5rem;
+    /* text-2xl */
+    font-weight: 700;
+    color: #111827;
+    /* gray-900 */
+    margin: 0;
+}
+
+.statLabel {
+    font-size: 0.875rem;
+    /* text-sm */
+    color: #4b5563;
+    /* gray-600 */
+    margin: 0;
+}
+
+/* page.module.css */
+.loaderIcon {
+  width: 1em; /* Adjust size as needed */
+  height: 1em; /* Adjust size as needed */
+  margin: 0 auto;
+  animation: spin 1s linear infinite; /* Simple spin animation */
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

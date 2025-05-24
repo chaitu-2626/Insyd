@@ -1,0 +1,53 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+    width: 100%;
+    padding: 10px;
+    /* bg-gray-50 */
+}
+
+.postsWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.profileHeader {
+    background-color: #fff;
+    padding: 1.5rem;
+    /* 6 */
+}
+
+.headerTop {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    /* space-x-4 */
+    margin-bottom: 1.5rem;
+    /* mb-6 */
+}
+
+.userInfo {
+    flex: 1;
+}
+
+.username {
+    font-size: 1.25rem;
+    /* text-xl */
+    font-weight: 700;
+    color: #111827;
+    /* gray-900 */
+    margin: 0;
+}
+
+.name {
+    color: #4b5563;
+    /* gray-600 */
+    margin: 0;
+}

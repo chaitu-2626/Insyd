@@ -1,0 +1,102 @@
+/* LoadingCars.module.css */
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.car {
+  width: 60px;
+  height: 30px;
+  background-color: #ccc; /* Grey color */
+  border-radius: 5px;
+  position: relative;
+  animation: moveCars 1.5s infinite ease-in-out;
+}
+
+.car:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.car:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.body {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.front {
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 15px;
+  height: 20px;
+  background-color: #eee; /* Lighter grey for detail */
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.back {
+  position: absolute;
+  right: 0;
+  top: 5px;
+  width: 15px;
+  height: 20px;
+  background-color: #eee; /* Lighter grey for detail */
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.wheel {
+  position: absolute;
+  bottom: -5px;
+  width: 12px;
+  height: 12px;
+  background-color: #999; /* Darker grey for wheels */
+  border-radius: 50%;
+}
+
+.car:nth-child(1) .wheel:nth-child(2) {
+  left: 10px;
+}
+
+.car:nth-child(1) .wheel:nth-child(3) {
+  right: 10px;
+}
+
+.car:nth-child(2) .wheel:nth-child(2) {
+  left: 10px;
+}
+
+.car:nth-child(2) .wheel:nth-child(3) {
+  right: 10px;
+}
+
+.car:nth-child(3) .wheel:nth-child(2) {
+  left: 10px;
+}
+
+.car:nth-child(3) .wheel:nth-child(3) {
+  right: 10px;
+}
+
+@keyframes moveCars {
+  0% {
+    transform: translateX(-20px);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateX(20px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-20px);
+    opacity: 0.5;
+  }
+}

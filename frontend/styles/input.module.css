@@ -1,0 +1,31 @@
+.field {
+  margin-bottom: 0.5rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.textarea {
+  resize: vertical;
+}
+
+.charCount {
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  color: #777;
+  text-align: right;
+}
