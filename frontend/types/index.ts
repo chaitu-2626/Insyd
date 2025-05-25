@@ -10,16 +10,21 @@ export interface User {
   posts: number;
 }
 
+export interface Like {
+  userId: string;
+}
+
 export interface Post {
   id: string;
 	authorId: string;
-  likes: number;
 	title: string;
 	content: string;
   author: {
     username: string;
     imageUrl: string;
-  };
+    isFollowing: boolean;
+  },
+  likes: Like[];
 }
 
 export interface BaseNotification {

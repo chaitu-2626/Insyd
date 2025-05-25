@@ -1,6 +1,6 @@
 /* app/components/PostCard.module.css */
 .card {
-  max-width: 300px;
+  max-width: 500px;
   border: 1px solid #e5e7eb;
   padding: 16px;
   margin-bottom: 16px;
@@ -10,11 +10,11 @@
 .postHeader {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .authorName {
-  margin-top: 0;
-  margin-bottom: 8px;
+  margin-right: 20px;
 }
 
 .title {

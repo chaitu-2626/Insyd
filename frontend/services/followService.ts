@@ -21,7 +21,7 @@ class FollowService extends BaseApiService {
         try {
             const api = await BaseApiService.getApi(token);
             const response = await api.delete(`/follow/${userId}`);
-            return response.data.data;
+            return response.data;
         } catch (error: unknown) {
             console.error('Error unfollowing user:', error);
 

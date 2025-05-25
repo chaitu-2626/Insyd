@@ -6,7 +6,13 @@ const useUserSession = () => {
     const { user, } = useUser();
 
     const getUserToken = useCallback(async () => {
-        const token = await getToken();
+        let token = null;
+        try{
+             token = await getToken();
+        }catch(error){
+            console.error("Error getting user token:", error);
+        }
+       
         return token;
     }, [getToken]);
 

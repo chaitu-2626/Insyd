@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import styles from "@/styles/createPost.module.css";
 import Input from "@/components/Input";
 import { useCreatePost } from "@/hooks";
@@ -72,18 +72,6 @@ const CreatePost = () => {
 					</div>
 				</div>
 			</div>
-
-			<ToastContainer
-				position="bottom-right"
-				autoClose={3000}
-				hideProgressBar={false}
-				newestOnTop={false}
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss
-				draggable
-				pauseOnHover
-			/>
 		</div>
 	);
 };

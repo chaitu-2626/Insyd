@@ -1,17 +1,18 @@
 "use client";
 
 import styles from "@/styles/followButton.module.css";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useState, useCallback, useRef } from "react";
 import { FollowApiService } from "@/services";
 import { useUserSession } from "@/hooks";
 
 interface Props {
 	authorId: string;
+	following: boolean;
 }
 
-const FollowButton = ({ authorId }: Props) => {
-	const [isFollowing, setIsFollowing] = useState(false);
+const FollowButton = ({ authorId, following }: Props) => {
+	const [isFollowing, setIsFollowing] = useState(following);
 	const hasPendingRequest = useRef(false);
 
 	const { getUserToken } = useUserSession();
@@ -29,13 +30,21 @@ const FollowButton = ({ authorId }: Props) => {
 			if (!token) throw new Error("Authentication token not found.");
 
 			if (isFollowing) {
-				await FollowApiService.unFollowUser(authorId, token);
-				setIsFollowing(false);
+				const data = await FollowApiService.unFollowUser(
+					authorId,
+					token
+				);
+				console.log(data);
+				if (data && data.success === true) {
+					setIsFollowing(false);
+				}
 				return;
 			}
 
-			await FollowApiService.followUser(authorId, token);
-			setIsFollowing(true);
+			const data = await FollowApiService.followUser(authorId, token);
+			if (data && data.success === true) {
+				setIsFollowing(true);
+			}
 		} catch (error) {
 			console.error(message, error);
 			toast.error(message);
@@ -54,17 +63,6 @@ const FollowButton = ({ authorId }: Props) => {
 			>
 				{isFollowing ? "Unfollow" : "Follow"}
 			</button>
-			<ToastContainer
-				position="bottom-right"
-				autoClose={3000}
-				hideProgressBar={false}
-				newestOnTop={false}
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss
-				draggable
-				pauseOnHover
-			/>
 		</>
 	);
 };

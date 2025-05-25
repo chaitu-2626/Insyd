@@ -29,6 +29,7 @@
   -webkit-background-clip: text;
   background-clip: transparent;
   -webkit-text-fill-color: transparent;
+  margin: 10px 0px 16px 10px;
 }
 
 .navList {
