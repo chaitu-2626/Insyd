@@ -1,2 +1,2 @@
-export * from './post.validator';
-export * from './follower.validators';
+export * from './post.validator.js';
+export * from './follower.validators.js';

@@ -1,8 +1,7 @@
 // enums/NotificationType.ts
 export enum NotificationType {
   FOLLOW = 'follow',
-  LIKE = 'like',
-  NEW_POST = 'new_post',
+  LIKE = 'like'
 }
 
 export interface NotificationPayload {

@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
-import { LikeRepository } from '@repository';
 import { getAuth } from '@clerk/express';
-import { success, error, validationError, formatZodErrors } from '@utils';
-import { LikeAndUnLikePost } from '@validators';
-import { SocketService } from '@services';
-import { NotificationType } from '@types';
-import { getAuthorDetailsOfPost } from './post.controller';
+import { LikeRepository } from '../repositories/index.js';
+import { success, error, validationError, formatZodErrors, getUserDetailsOfUserId } from '../utils/index.js';
+import { LikeAndUnLikePost } from '../validators/index.js';
+import { SocketService } from '../services/index.js';
+import { NotificationType } from '../types/index.js';
+import { getAuthorDetailsOfPost } from './post.controller.js';
 
 export const likePost = async (req: Request, res: Response) => {
     const result = LikeAndUnLikePost.safeParse(req.params);
@@ -20,11 +20,12 @@ export const likePost = async (req: Request, res: Response) => {
         const data = await LikeRepository.create({ postId, userId: userId! });
         success(res, 'Post liked', data);
 
-        const authorDetails = await getAuthorDetailsOfPost(postId);
-
+        
+        const userDetails = await getUserDetailsOfUserId(userId!);
+        const toUserDetails = await getAuthorDetailsOfPost(postId);
         const notificationCfg = {
-            fromUserName: authorDetails?.username ?? 'Some one',
-            toUserId: userId!,
+            fromUserName: userDetails?.username ?? 'Some one',
+            toUserId: toUserDetails?.id!,
             type: NotificationType.LIKE
         }
 

@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { FollowRepository } from '@repository';
-import { success, error, validationError, formatZodErrors } from '@utils';
 import { getAuth } from '@clerk/express';
-import { FollowValidator } from '@validators';
-import { SocketService } from '@services';
-import { NotificationType } from '@types';
-import { getUserDetailsOfUserId } from '@utils';
+import { FollowRepository } from '../repositories/index.js';
+import { success, error, validationError, formatZodErrors } from '../utils/index.js';
+import { FollowValidator } from '../validators/index.js';
+import { SocketService } from '../services/index.js';
+import { NotificationType } from '../types/index.js';
+import { getUserDetailsOfUserId } from '../utils/index.js';
 
 export const followUser = async (req: Request, res: Response) => {
     const result = FollowValidator.safeParse(req.params);
@@ -14,7 +14,7 @@ export const followUser = async (req: Request, res: Response) => {
         return validationError(res, formatZodErrors(result.error));
     }
 
-    const followeeId = req.params.userId;
+    const followeeId = req.params.followeeId;
     const { userId } = getAuth(req);
 
     try {
@@ -41,12 +41,12 @@ export const unfollowUser = async (req: Request, res: Response) => {
         return validationError(res, formatZodErrors(result.error));
     }
 
-    const followeeId = req.params.userId;
+    const followeeId = req.params.followeeId;
     const { userId } = getAuth(req);
 
     try {
-        await FollowRepository.unFollow(followeeId, userId!);
-        success(res, 'Post un liked');
+        const data = await FollowRepository.unFollow(followeeId, userId!);
+        success(res, 'Post un liked', data, StatusCodes.CREATED);
     } catch (err) {
         console.error(err);
         error(res, 'Failed to unlike post');
@@ -55,7 +55,7 @@ export const unfollowUser = async (req: Request, res: Response) => {
 
 export const isFollowing = async (userId: string) => {
     try {
-        const data = await FollowRepository.getById(userId);
+        const data = await FollowRepository.isFollowing(userId);
         return data ? true : false;
     } catch (err) {
         console.error(err);

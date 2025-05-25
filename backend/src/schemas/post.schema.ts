@@ -1,6 +1,6 @@
 import { relations } from 'drizzle-orm';
 import { pgTable, uuid, text, timestamp, index, varchar } from 'drizzle-orm/pg-core';
-import { likeSchema } from './likes.schema';
+import { likeSchema } from './likes.schema.js';
 
 export const postSchema = pgTable('posts', {
 	id: uuid('id').defaultRandom().primaryKey(),

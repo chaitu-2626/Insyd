@@ -1,7 +1,7 @@
 import { Server as IOServer, Socket } from 'socket.io';
 import { verifyToken } from '@clerk/express';
-import { env } from '@config';
-import {NotificationPayload, NotificationType} from '@types';
+import { env } from '../configs/index.js';
+import { NotificationPayload, NotificationType } from '../types/index.js';
 
 
 class SocketService {
@@ -26,14 +26,17 @@ class SocketService {
 
             try {
                 const verifiedToken = await verifyToken(token, {
-                    jwtKey: process.env.CLERK_JWT_KEY,
+                    jwtKey: env.JWKS_PUBLIC_KEY,
                     authorizedParties: [env.NEXT_PUBLIC_FRONTEND_URL!],
                 });
 
                 if (!verifiedToken) {
                     throw new Error('Invalid token');
-                    return;
                 }
+                
+                const userId = verifiedToken.sub;
+                this.connectedUsers.set(userId, socket.id);
+                console.log(`User ${userId} connected with socket ID ${socket.id}`);
 
                 socket.on('disconnect', () => {
                     for (const [uid, sid] of this.connectedUsers.entries()) {
@@ -51,15 +54,10 @@ class SocketService {
         });
     }
 
-    public emit({fromUserName, toUserId, type }: NotificationPayload) {
-        if(!this.io){
+    public emit({ fromUserName, toUserId, type }: NotificationPayload) {
+        if (!this.io) {
             return;
         }
-
-        if(toUserId === 'all' && type === NotificationType.NEW_POST){
-            this.io.emit('notify', { type, message: `User ${fromUserName} created a new post` });
-            return;
-        };
 
         const socketId = this.connectedUsers.get(toUserId);
         if (socketId) {
@@ -75,8 +73,7 @@ class SocketService {
 
         const message = {
             follow: () => `User ${toUserName} followed you.`,
-            like: () => `User ${toUserName} liked your post.`,
-            new_post: () => `User ${toUserName} created a new post.`
+            like: () => `User ${toUserName} liked your post.`
         }
 
         return message[type]();

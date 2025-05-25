@@ -1,7 +1,7 @@
 import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
-import { env } from './env.config';
-import * as schema from '@schema';
+import { env } from './env.config.js';
+import * as schema from '../schemas/index.js';
 
 // Initializes a Neon database connection using the provided DATABASE_URL.
 const sql = neon(env.DATABASE_URL!);

@@ -1,11 +1,11 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
 import { clerkMiddleware, requireAuth } from '@clerk/express';
-import { env } from '@config';
-import routes from '@routes';
-import { SocketService } from '@services';
+import { env } from './configs/index.js';
+import routes from './routes/index.js';
+import { SocketService } from './services/index.js';
 
 const app = express();
 const server = http.createServer(app);
@@ -25,6 +25,11 @@ app.use('/api', requireAuth(), routes);
 
 // Initialize Socket Service
 SocketService.initialize(io);
+
+// Health check route — public
+app.get('/health', (_req: Request, res: Response) => {
+	res.status(200).json({ status: 'ok' });
+});
 
 server.listen(env.PORT, () => {
 	console.log(`Server running on port ${env.PORT}`);

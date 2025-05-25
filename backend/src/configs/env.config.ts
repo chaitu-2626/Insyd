@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { z } from 'zod';
-import { Environment } from '@types';
+import { Environment } from '../types/index.js';
 
 dotenv.config();
 
@@ -13,7 +13,8 @@ const envSchema = z.object({
   PORT: z
     .string()
     .transform((val) => (val ? Number(val) : 3000))
-    .refine((val) => !isNaN(val) && val > 0, 'PORT must be a positive number')
+    .refine((val) => !isNaN(val) && val > 0, 'PORT must be a positive number'),
+  JWKS_PUBLIC_KEY: z.string().min(1, 'JWKS_PUBLIC_KEY is required'),
 });
 
 const parsed = envSchema.safeParse(process.env);

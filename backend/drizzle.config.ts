@@ -1,12 +1,14 @@
 import { defineConfig } from 'drizzle-kit';
-import { env } from './src/configs';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Defines the Drizzle ORM configuration for migrations and schema.
 export default defineConfig({
 	out: './src/migrations',
-	schema: './src/schemas/index.ts',
+	schema: './dist/schemas/index.js',
 	dialect: 'postgresql',
 	dbCredentials: {
-		url: env.DATABASE_URL as string,
+		url: process.env.DATABASE_URL!,
 	},
 });

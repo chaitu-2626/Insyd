@@ -1,14 +1,11 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { PostRepository } from '@repository';
-import { success, error, validationError, formatZodErrors } from '@utils';
-import { CreatePostSchema, GetPostById } from '@validators';
 import { getAuth } from '@clerk/express';
-import { SelectPost } from '@types';
-import { isFollowing } from './follow.controller';
-import { getUserDetailsOfUserId } from '@utils';
-import { NotificationType } from '@types';
-import { SocketService } from '@services';
+import { PostRepository } from '../repositories/index.js';
+import { success, error, validationError, formatZodErrors, getUserDetailsOfUserId } from '../utils/index.js';
+import { CreatePostSchema, GetPostById } from '../validators/index.js';
+import { SelectPost } from '../types/index.js';
+import { isFollowing } from './follow.controller.js';
 
 
 export const getAllPost = async (req: Request, res: Response) => {
@@ -43,10 +40,11 @@ const getPostsWithUserDetails = async (posts: SelectPost[]) => {
             const user = await getUserDetailsOfUserId(post.authorId);
             const isAuthorFollowing = await isFollowing(post.authorId);
 
-            userMap.set(post.authorId, { ...user, isFollowing: isAuthorFollowing });
+            const updatedUserDetails = { ...user, isFollowing: isAuthorFollowing };
+            userMap.set(post.authorId, updatedUserDetails);
             return {
                 ...post,
-                author: user
+                author: updatedUserDetails
             };
         })
     );
@@ -98,16 +96,6 @@ export const createPost = async (req: Request, res: Response) => {
         });
 
         success(res, 'Post created successfully', post, StatusCodes.CREATED);
-
-        const userDetails = await getUserDetailsOfUserId(userId!);
-
-        const notificationCfg = {
-            fromUserName: userDetails?.username ?? 'Some one',
-            toUserId: 'all',
-            type: NotificationType.NEW_POST
-        }
-
-        SocketService.emit(notificationCfg);
     } catch (err) {
         console.error(err);
         error(res, 'Failed to create post');
@@ -115,12 +103,13 @@ export const createPost = async (req: Request, res: Response) => {
 }
 
 export const getAuthorDetailsOfPost = async (postId: string) => {
-    const post = await PostRepository.getById(postId);
-    if (post.length === 0) {
+    const post = await PostRepository.getPostByPostId(postId);
+    
+    if (!post) {
         return null;
     }
 
-    const authorId = post[0].authorId;
+    const authorId = post.authorId;
     const authorDetails = await getUserDetailsOfUserId(authorId);
 
     return authorDetails;

@@ -1,5 +1,5 @@
 import { InferSelectModel, InferInsertModel } from "drizzle-orm";
-import { postSchema, likeSchema, followSchema } from "@schema";
+import { postSchema, likeSchema, followSchema } from "../schemas/index.js";
 
 
 export type Post = typeof postSchema;

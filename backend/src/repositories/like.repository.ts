@@ -1,8 +1,8 @@
-import BaseRepository from "./base.repository";
-import { likeSchema } from '@schema';
-import { Like, InsertLike, SelectLike } from '@types';
 import { eq, and } from "drizzle-orm";
-import { db } from '@config';
+import BaseRepository from "./base.repository.js";
+import { likeSchema } from '../schemas/index.js';
+import { Like, InsertLike, SelectLike } from '../types/index.js';
+import { db } from '../configs/index.js';
 
 type PostId = SelectLike['postId'];
 type UserId = SelectLike['userId'];

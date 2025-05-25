@@ -1,2 +1,2 @@
-export * from './db.config';
-export * from './env.config';
+export * from './db.config.js';
+export * from './env.config.js';

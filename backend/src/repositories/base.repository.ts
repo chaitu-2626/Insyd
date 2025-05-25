@@ -1,6 +1,6 @@
 import { PgTable, PgColumn } from 'drizzle-orm/pg-core';
 import { eq, InferSelectModel, InferInsertModel } from 'drizzle-orm';
-import { db } from '@config';
+import { db } from '../configs/index.js';
 
 /**
  * Abstract base repository providing common CRUD operations for Drizzle ORM.
@@ -38,7 +38,7 @@ abstract class BaseRepository<
 
             return result as TSelect[];
         } catch (error) {
-            console.error(`Error getting entity by ID ${id} from table ${me.table._.name}:`, error);
+            console.error(`Error getting entity by ID ${id}`, error);
             throw error;
         }
     }
@@ -53,7 +53,7 @@ abstract class BaseRepository<
         try {
             return await db.select().from(me.table as PgTable) as TSelect[];
         } catch (error) {
-            console.error(`Error getting all entities from table ${me.table._.name}:`, error);
+            console.error(`Error getting all entities`, error);
             throw error;
         }
     }
@@ -95,7 +95,7 @@ abstract class BaseRepository<
             return Array.isArray(result) && result.length > 0 ? result[0] as TSelect : undefined;
         } catch (error) {
             console.error(
-                `Error updating entity with ID ${id} in table ${me.table._.name}:`,
+                `Error updating entity with ID ${id}`,
                 error
             );
             throw error;
@@ -118,7 +118,7 @@ abstract class BaseRepository<
 
             return Array.isArray(result) && result.length > 0 ? result[0] as TSelect : undefined;
         } catch (error) {
-            console.error(`Error deleting entity with ID ${id} from table ${me.table._.name}:`, error);
+            console.error(`Error deleting entity with ID ${id}`, error);
             throw error;
         }
     }

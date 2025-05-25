@@ -1,33 +1,14 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig", // JSON schema for autocompletion and validation
 	"display": "Default", // Optional display name for tooling and config inheritance
-
 	"compilerOptions": {
 		"baseUrl": ".", // Base directory for non-relative module imports
 		"outDir": "dist", // Directory for compiled JS output
 		"rootDir": "src", // Root directory for TypeScript source files
-
-		"paths": {
-			// Module alias mapping for cleaner imports
-			"$/*": ["./*"],
-			"@controllers": ["src/controllers/index.ts"],
-			"@middlewares": ["src/middlewares/index.ts"],
-			"@repository": ["src/repositories/index.ts"],
-			"@routes": ["src/routes/index.ts"],
-			"@utils": ["src/utils/index.ts"],
-			"@validators": ["src/validators/index.ts"],
-			"@tests": ["src/tests/index.ts"],
-			"@types": ["src/types/index.ts"],
-			"@config": ["src/configs/index.ts"],
-			"@schema": ["src/schemas/index.ts"],
-			"@services": ["src/services/index.ts"]
-		},
-
 		"target": "ES2022", // ECMAScript version output (latest features of 2022)
 		"module": "ESNext", // Module system targeting modern JS (for bundlers)
-		"moduleResolution": "Bundler", // Resolution strategy optimized for bundlers
+		"moduleResolution": "node", // Resolve modules using Node.js module resolution
 		"lib": ["es2022"], // Include ES2022 library definitions
-
 		"strict": true, // Enable all strict type-checking options
 		"esModuleInterop": true, // Allow default imports from CommonJS modules
 		"skipLibCheck": true, // Skip type checks on `.d.ts` files
@@ -40,7 +21,8 @@
 		"noUnusedLocals": true, // Error on unused local variables
 		"noUnusedParameters": true, // Error on unused function parameters
 		"preserveWatchOutput": true, // Don't clear console output between rebuilds in watch mode
-		"composite": false // Project is not part of a multi-project build (no project references)
+		"composite": false, // Project is not part of a multi-project build (no project references)
+		"sourceMap": true, // Generate source maps for debugging
 	},
 
 	"include": ["src/**/*.ts"], // Include all `.ts` files in the `src` directory
