@@ -19,7 +19,8 @@
 			"@tests": ["src/tests/index.ts"],
 			"@types": ["src/types/index.ts"],
 			"@config": ["src/configs/index.ts"],
-			"@schema": ["src/schemas/index.ts"]
+			"@schema": ["src/schemas/index.ts"],
+			"@services": ["src/services/index.ts"]
 		},
 
 		"target": "ES2022", // ECMAScript version output (latest features of 2022)

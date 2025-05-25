@@ -3,16 +3,19 @@ import { StatusCodes } from 'http-status-codes';
 import { PostRepository } from '@repository';
 import { success, error, validationError, formatZodErrors } from '@utils';
 import { CreatePostSchema, GetPostById } from '@validators';
-import { getAuth, clerkClient } from '@clerk/express';
+import { getAuth } from '@clerk/express';
 import { SelectPost } from '@types';
-import {isFollowing} from './follow.controller';
+import { isFollowing } from './follow.controller';
+import { getUserDetailsOfUserId } from '@utils';
+import { NotificationType } from '@types';
+import { SocketService } from '@services';
 
 
 export const getAllPost = async (req: Request, res: Response) => {
-      const { userId } = getAuth(req);
+    const { userId } = getAuth(req);
     try {
         const posts = await PostRepository.getAllPosts(userId!);
-        if(posts.length === 0) {
+        if (posts.length === 0) {
             success(res, 'Posts fetched successfully', []);
             return;
         }
@@ -37,7 +40,7 @@ const getPostsWithUserDetails = async (posts: SelectPost[]) => {
                 };
             }
 
-            const user = await clerkClient.users.getUser(post.authorId);
+            const user = await getUserDetailsOfUserId(post.authorId);
             const isAuthorFollowing = await isFollowing(post.authorId);
 
             userMap.set(post.authorId, { ...user, isFollowing: isAuthorFollowing });
@@ -95,10 +98,32 @@ export const createPost = async (req: Request, res: Response) => {
         });
 
         success(res, 'Post created successfully', post, StatusCodes.CREATED);
+
+        const userDetails = await getUserDetailsOfUserId(userId!);
+
+        const notificationCfg = {
+            fromUserName: userDetails?.username ?? 'Some one',
+            toUserId: 'all',
+            type: NotificationType.NEW_POST
+        }
+
+        SocketService.emit(notificationCfg);
     } catch (err) {
         console.error(err);
         error(res, 'Failed to create post');
     }
+}
+
+export const getAuthorDetailsOfPost = async (postId: string) => {
+    const post = await PostRepository.getById(postId);
+    if (post.length === 0) {
+        return null;
+    }
+
+    const authorId = post[0].authorId;
+    const authorDetails = await getUserDetailsOfUserId(authorId);
+
+    return authorDetails;
 }
 
 

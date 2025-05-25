@@ -1,5 +1,5 @@
 import { PgTable, PgColumn } from 'drizzle-orm/pg-core';
-import { eq, InferSelectModel, InferInsertModel, getTableColumns } from 'drizzle-orm';
+import { eq, InferSelectModel, InferInsertModel } from 'drizzle-orm';
 import { db } from '@config';
 
 /**
@@ -35,7 +35,6 @@ abstract class BaseRepository<
                 .select()
                 .from(me.table as PgTable)
                 .where(eq(me.idColumn, id))
-                .limit(1);
 
             return result as TSelect[];
         } catch (error) {

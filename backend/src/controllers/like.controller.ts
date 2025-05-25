@@ -3,6 +3,9 @@ import { LikeRepository } from '@repository';
 import { getAuth } from '@clerk/express';
 import { success, error, validationError, formatZodErrors } from '@utils';
 import { LikeAndUnLikePost } from '@validators';
+import { SocketService } from '@services';
+import { NotificationType } from '@types';
+import { getAuthorDetailsOfPost } from './post.controller';
 
 export const likePost = async (req: Request, res: Response) => {
     const result = LikeAndUnLikePost.safeParse(req.params);
@@ -16,6 +19,16 @@ export const likePost = async (req: Request, res: Response) => {
     try {
         const data = await LikeRepository.create({ postId, userId: userId! });
         success(res, 'Post liked', data);
+
+        const authorDetails = await getAuthorDetailsOfPost(postId);
+
+        const notificationCfg = {
+            fromUserName: authorDetails?.username ?? 'Some one',
+            toUserId: userId!,
+            type: NotificationType.LIKE
+        }
+
+        SocketService.emit(notificationCfg);
     } catch (err) {
         console.error(err);
         error(res, 'Failed to like post');
